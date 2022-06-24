@@ -17,10 +17,6 @@ sudo apt-get upgrade -y
 sudo apt-get install mariadb-server -y
 ```
 ```bash
-sudo vi /etc/my.cnf
-```
-(use `:wq!` to leave file). The above command may be irrelevant.
-```bash
 sudo systemctl start mariadb
 ```
 ```bash
@@ -32,16 +28,16 @@ sudo mysql
 ```
 and then:
 ```sql
-MariaDB > CREATE DATABASE ecomdb;
+CREATE DATABASE ecomdb;
 ```
 ```sql
-MariaDB > CREATE USER 'ecomuser'@'localhost' IDENTIFIED BY 'ecompassword';
+CREATE USER 'ecomuser'@'localhost' IDENTIFIED BY 'ecompassword';
 ```
 ```sql
-MariaDB > GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
 ```
 ```sql
-MariaDB > FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;
 ```
 ```sql
 exit
@@ -49,6 +45,9 @@ exit
 4. You should now have returned to the bash terminal. Create and load the data into the database:
 ```bash
 cat > db-load-script.sql <<-EOF
+```
+```sql
+USE ecomdb;
 ```
 ```sql
 CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
@@ -97,3 +96,7 @@ sudo git clone https://github.com/kodekloudhub/learning-app-ecommerce.git /var/w
 ```bash
 sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
 ```
+9. Head to IP address of your server to view the website.
+
+## Ansible
+![Ansible Set-Up](./diagrams/Ansible_KodeKloud_Project.png)
